@@ -5,6 +5,8 @@ import axios from 'axios'
 function Login() {
     const [email , setEmail] = useState("");
     const [password , setPassword] = useState("");
+    const [firstName , setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const navigate = useNavigate();
 
 const handleSignUp = async(e)=>{
@@ -12,14 +14,19 @@ const handleSignUp = async(e)=>{
   try{
     const res = await axios.post('http://localhost:3000/register' , {
         username:email,
-        password:password
+        password:password,
+        firstName:firstName,
+        lastName:lastName
     });
+    localStorage.setItem("username", email);
+    localStorage.setItem("name", firstName);
+
     console.log(res);
     navigate("/dashboard")
 
   }
   catch(e){
-     console.log(e.response.data);
+     console.log(e.response);
   }
 }
 
@@ -34,6 +41,44 @@ const handleSignUp = async(e)=>{
         <p className="mt-4 font-light">Please enter your details</p>
 
         <form className="h-full w-[60%] mt-14" onSubmit={(e)=>handleSignUp(e)}>
+        <div className="relative z-0 w-full mb-5 justify-between flex" >
+          <div className="w-[45%]">
+          <input
+              type="text"
+              name="floating_email"
+              id="floating_email"
+              className="block py-2.5 px-0 w-full text-sm text-white   bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark: dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+              value={firstName}
+              onChange={(e)=>setFirstName(e.target.value)}
+            />
+            <label
+              type="floating_email"
+              className="  peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus: peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              First name
+            </label>
+          </div>
+          <div className="w-[45%]">
+          <input
+              type="text"
+              name="floating_email"
+              id="floating_email"
+              className="block py-2.5 px-0 w-full text-sm text-white   bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark: dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+              value={lastName}
+              onChange={(e)=>setLastName(e.target.value)}
+            />
+            <label
+              type="floating_email"
+              className="  peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus: peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Last name
+            </label>
+          </div>
+          </div>
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="email"

@@ -18,10 +18,15 @@ const handleSignUp = async(e)=>{
         firstName:firstName,
         lastName:lastName
     });
-    localStorage.setItem("username", email);
+    localStorage.setItem("email", email);
     localStorage.setItem("name", firstName);
 
-    console.log(res);
+    if(res.data && res.data.token){
+      localStorage.setItem('token', res.data.token);
+    }
+    else{
+      alert("Token missing!!")
+    }
     navigate("/dashboard")
 
   }

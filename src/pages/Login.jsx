@@ -1,11 +1,37 @@
-import { useState } from "react";
+import {useState } from "react";
 import login_img from "../assets/login.png";
 import {Link, useNavigate} from 'react-router-dom'
 import  axios  from "axios";
+
+
 function Login() {
   const [email , setEmail] = useState("");
   const [password , setPassword] = useState("");
+  const [passwordReset , setPasswordReset] = useState(false);
   const navigate = useNavigate();
+
+
+  const handlePasswordReset = async(e)=>{
+    e.preventDefault();
+  try{
+    const res = await axios.post('http://localhost:3000/reset-password' , {
+        username:email,
+        password:password
+    });
+    localStorage.setItem("email" , email);
+    if(res.data && res.data.token){
+      localStorage.setItem('token', res.data.token);
+    }
+    else{
+      alert("Token missing!!")
+    }
+    navigate("/dashboard");
+  }
+  catch(e){
+     console.log(e.response.data)
+  }
+  }
+
   const handleLogin = async(e)=>{
     e.preventDefault();
   try{
@@ -13,13 +39,21 @@ function Login() {
         username:email,
         password:password
     });
-    console.log(res);
+    localStorage.setItem("email" , email);
+    if(res.data && res.data.token){
+      localStorage.setItem('token', res.data.token);
+    }
+    else{
+      alert("Token missing!!")
+    }
     navigate("/dashboard");
   }
   catch(e){
      console.log(e.response.data)
   }
 }
+
+
 
   return (
     <div className=" text-white w-full h-dvh bg-black p-2 flex justify-between items-center">
@@ -28,10 +62,10 @@ function Login() {
       </div>
       <div className="bg-grey_custom p-6 flex flex-col items-center justify-center h-full w-[80%] rounded-lg">
         <h1 className="text-3xl mt-5">Whispr</h1>
-        <h1  className="text-4xl font-semibold mt-12">Welcome back!</h1>
-        <p className="mt-4 font-light">Please enter your details</p>
+        <h1  className="text-4xl font-semibold mt-12">{passwordReset ? "Password reset" : "Welcome back!"}</h1>
+        <p className="mt-4 font-light">  {passwordReset ? "Please enter your new password" : "Please enter your details"} </p>
 
-        <form className="h-full w-[60%] mt-14" onSubmit={(e)=>handleLogin(e)} > 
+        <form className="h-full w-[60%] mt-14" onSubmit={(e)=>{passwordReset ? handlePasswordReset(e) : handleLogin(e)}} > 
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="email"
@@ -69,7 +103,7 @@ function Login() {
             </label>
           </div>
            <div className=" w-full  flex justify-between items-center">
-           <p className="cursor-pointer ">Forgot password</p>
+           <p className="cursor-pointer " onClick={()=>(setPasswordReset(!passwordReset))}>{passwordReset ? "login" : "Forgot password"}</p>
             <Link to="/signup" className=" curson-pointer">Signup</Link>    
            </div>
           <button

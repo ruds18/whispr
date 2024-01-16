@@ -1,6 +1,8 @@
 import { useState } from "react";
 import login_img from "../assets/login.png";
 import {Link, useNavigate} from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 function Login() {
     const [email , setEmail] = useState("");
@@ -8,6 +10,8 @@ function Login() {
     const [firstName , setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const navigate = useNavigate();
+    const notify = (message) => toast(`${message}`);
+
 
 const handleSignUp = async(e)=>{
     e.preventDefault();
@@ -31,12 +35,14 @@ const handleSignUp = async(e)=>{
 
   }
   catch(e){
+     notify(e.response.data.message)
      console.log(e.response);
   }
 }
 
   return (
     <div className=" text-white w-full h-dvh bg-black p-2 flex justify-between items-center">
+      <ToastContainer/>
       <div className=" flex items-center justify-center w-full h-full ">
         <img className="h-[45rem]" src={login_img} alt="doodle" />
       </div>

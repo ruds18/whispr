@@ -2,17 +2,22 @@ import {useState } from "react";
 import login_img from "../assets/login.png";
 import {Link, useNavigate} from 'react-router-dom'
 import  axios  from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Login() {
+  
   const [email , setEmail] = useState("");
   const [password , setPassword] = useState("");
   const [passwordReset , setPasswordReset] = useState(false);
   const navigate = useNavigate();
+  const notify = (message) => toast(`${message}`);
 
 
   const handlePasswordReset = async(e)=>{
     e.preventDefault();
+    notify("clicked")
   try{
     const res = await axios.post('http://localhost:3000/reset-password' , {
         username:email,
@@ -46,10 +51,15 @@ function Login() {
     else{
       alert("Token missing!!")
     }
-    navigate("/dashboard");
+    notify("Login success")
+
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 2000)
   }
   catch(e){
-     console.log(e.response.data)
+    notify(e.response.data.message)
+     console.log(e.response.data.message)
   }
 }
 
@@ -57,8 +67,10 @@ function Login() {
 
   return (
     <div className=" text-white w-full h-dvh bg-black p-2 flex justify-between items-center">
+      
       <div className=" flex items-center justify-center w-full h-full ">
         <img className="h-[45rem]" src={login_img} alt="doodle" />
+        
       </div>
       <div className="bg-grey_custom p-6 flex flex-col items-center justify-center h-full w-[80%] rounded-lg">
         <h1 className="text-3xl mt-5">Whispr</h1>
@@ -113,7 +125,7 @@ function Login() {
             Log In
           </button>
         </form>
-        
+        <ToastContainer/>
       </div>
     </div>
   );

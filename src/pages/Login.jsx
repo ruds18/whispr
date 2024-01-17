@@ -40,7 +40,7 @@ function Login() {
   const handleLogin = async(e)=>{
     e.preventDefault();
   try{
-    const res = await axios.post('http://localhost:3000/login' , {
+    const res = await axios.post('https://whispr-api.onrender.com/login' , {
         username:email,
         password:password
     });

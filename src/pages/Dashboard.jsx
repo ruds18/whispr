@@ -25,7 +25,7 @@ function Dashboard() {
          return;
       }
   
-      const response = await axios.get('http://localhost:3000/all-secrets', {
+      const response = await axios.get('https://whispr-api.onrender.com/all-secrets', {
         headers: {
           Authorization: token,
         },
@@ -46,7 +46,7 @@ function Dashboard() {
         navigate("/");
         return;
       }
-      await axios.post('http://localhost:3000/set-secret', {
+      await axios.post('https://whispr-api.onrender.com/set-secret', {
         secret: newSecret,
         username: username,
       }, {
@@ -74,7 +74,7 @@ function Dashboard() {
           return;
         }
     
-        const response = await axios.get('http://localhost:3000/current-user', {
+        const response = await axios.get('https://whispr-api.onrender.com/current-user', {
           params: {
             username: username,
           },

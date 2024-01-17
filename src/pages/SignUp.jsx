@@ -16,7 +16,7 @@ function Login() {
 const handleSignUp = async(e)=>{
     e.preventDefault();
   try{
-    const res = await axios.post('http://localhost:3000/register' , {
+    const res = await axios.post('https://whispr-api.onrender.com/register' , {
         username:email,
         password:password,
         firstName:firstName,

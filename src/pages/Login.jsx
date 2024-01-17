@@ -17,7 +17,6 @@ function Login() {
 
   const handlePasswordReset = async(e)=>{
     e.preventDefault();
-    notify("clicked")
   try{
     const res = await axios.post('http://localhost:3000/reset-password' , {
         username:email,
@@ -30,7 +29,10 @@ function Login() {
     else{
       alert("Token missing!!")
     }
-    navigate("/dashboard");
+    notify("Password reser successfull");
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 1000)
   }
   catch(e){
      console.log(e.response.data)

@@ -122,6 +122,7 @@ function Dashboard() {
             <input  value={newSecret} onChange={(e)=>setNewSecret(e.target.value)} className=" text-[10px] w-[50%]  md:text-[16px]  md:w-[80%] bg-transparent border-0 outline-none focus:border-transparent" type="text" placeholder="Type your secret" />
              <button className="text-white px-2 py-2 text-[12px] md:text-[16px] md:px-4 md:py-2 bg-grey_custom  rounded-lg" onClick={()=>addSecret()} >Add a secret</button>
            </motion.div>
+            <p className="text-[10px] md:text-sm text-white mt-3">You can only add a single secret</p>
            </>:""}
            <div className="mt-10">
             {texts.map((text,id)=>{

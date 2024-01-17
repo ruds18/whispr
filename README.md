@@ -1,4 +1,6 @@
-
+```bash
+  Note- API is hosted on render , so it may take time up to 2 minutes to login or signup at first.
+```
 # Whispr
 
 An react app built for sharing your secrets anonymous with others. Built with secure authentication with jwt.

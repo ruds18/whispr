@@ -18,7 +18,7 @@ function Login() {
   const handlePasswordReset = async(e)=>{
     e.preventDefault();
   try{
-    const res = await axios.post('http://localhost:3000/reset-password' , {
+    const res = await axios.post('https://whispr-api.onrender.com/reset-password' , {
         username:email,
         password:password
     });

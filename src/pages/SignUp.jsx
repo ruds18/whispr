@@ -4,7 +4,8 @@ import {Link, useNavigate} from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
-function Login() {
+
+function Login({url}) {
     const [email , setEmail] = useState("");
     const [password , setPassword] = useState("");
     const [firstName , setFirstName] = useState("");
@@ -16,7 +17,7 @@ function Login() {
 const handleSignUp = async(e)=>{
     e.preventDefault();
   try{
-    const res = await axios.post('https://whispr-api.onrender.com/register' , {
+    const res = await axios.post(`${url}/register` , {
         username:email,
         password:password,
         firstName:firstName,

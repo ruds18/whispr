@@ -6,19 +6,19 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-function Login() {
+function Login({url}) {
   
   const [email , setEmail] = useState("");
   const [password , setPassword] = useState("");
   const [passwordReset , setPasswordReset] = useState(false);
   const navigate = useNavigate();
   const notify = (message) => toast(`${message}`);
-
+ 
 
   const handlePasswordReset = async(e)=>{
     e.preventDefault();
   try{
-    const res = await axios.post('https://whispr-api.onrender.com/reset-password' , {
+    const res = await axios.post(`${url}/reset-password` , {
         username:email,
         password:password
     });
@@ -42,7 +42,7 @@ function Login() {
   const handleLogin = async(e)=>{
     e.preventDefault();
   try{
-    const res = await axios.post('https://whispr-api.onrender.com/login' , {
+    const res = await axios.post(`${url}/login` , {
         username:email,
         password:password
     });

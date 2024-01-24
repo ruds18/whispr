@@ -3,17 +3,17 @@ import Secret from "../components/Secret";
 import { useEffect, useState } from "react";
 import { useNavigate} from 'react-router-dom'
 import { motion } from "framer-motion"
-
-
 import axios from 'axios'
 import Sidebar from "../components/Sidebar";
-function Dashboard() {
+
+function Dashboard({url}) {
   const [isOpen , setIsOpen] = useState(false);
   const [newSecret , setNewSecret] = useState("");
   const [texts, setTexts] = useState([]);
   const [toogleOpen , setToggleOpen] = useState(false);
   const [userData , setUserData] = useState();
   const navigate = useNavigate();
+ 
 
 
   const fetchSecrets = async () => {
@@ -25,7 +25,7 @@ function Dashboard() {
          return;
       }
   
-      const response = await axios.get('https://whispr-api.onrender.com/all-secrets', {
+      const response = await axios.get(`${url}/all-secrets`, {
         headers: {
           Authorization: token,
         },
@@ -46,7 +46,7 @@ function Dashboard() {
         navigate("/");
         return;
       }
-      await axios.post('https://whispr-api.onrender.com/set-secret', {
+      await axios.post(`${url}/set-secret`, {
         secret: newSecret,
         username: username,
       }, {
@@ -74,7 +74,7 @@ function Dashboard() {
           return;
         }
     
-        const response = await axios.get('https://whispr-api.onrender.com/current-user', {
+        const response = await axios.get(`${url}/current-user`, {
           params: {
             username: username,
           },
@@ -93,13 +93,8 @@ function Dashboard() {
     fetchSecrets();
   }, []);
 
-  // const texts =[
-  //   "I still sleep with a stuffed animal from my childhood, and I'm in my 30s",
-  //   "I'm secretly learning to dance salsa so I can surprise my partner on their birthday",
-  //   " I often tell people I'm allergic to seafood because I just don't like the taste.",
-  //   " I once accidentally broke a friend's expensive vase and blamed it on their cat. ",
-  //   " I pretend to dislike superhero movies, but I've watched all of them multiple times. "
-  // ] 
+
+  
 
   return (
     <div className=" bg-black  h-dvh w-full px-5 md:px-10 ">
